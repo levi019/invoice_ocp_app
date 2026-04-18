@@ -3,7 +3,9 @@ from PIL import Image
 from pdf2image import convert_from_bytes
 from parser import extract_invoice_data
 from ai_parser import extract_with_gpt
-from ocr import extract_text
+from ocr_service import extract_text
+#from ocr import extract_text
+
 
 st.title("📄 Invoice OCR App")
 st.write("Invoice faylini yuklang (PNG, JPG, PDF)")
