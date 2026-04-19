@@ -62,10 +62,38 @@ Output format:
 Invoice text:
 {text}
 """
+    
+    prompt3 = f"""
+You are an intelligent information extraction system.
+
+Your task is to extract ALL meaningful and structured information from the given text.
+
+Rules:
+- Extract only information explicitly present in the text
+- Do NOT guess or infer
+- Identify key-value pairs, entities, attributes, and facts
+- Normalize keys into short, clear snake_case format
+- Group related data when possible
+- If no useful information is found, return {{}}
+- Return ONLY valid JSON (no explanation)
+
+Examples of what to extract:
+- names
+- locations
+- dates
+- numbers (prices, rewards, counts)
+- objects
+- events
+- attributes (color, type, status, etc.)
+
+Text:
+{text}
+"""
+    
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "user", "content": prompt1}
+            {"role": "user", "content": prompt3}
         ],
         temperature=0
     )
