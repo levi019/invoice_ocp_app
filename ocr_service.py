@@ -6,9 +6,8 @@ def image_to_bytes(image):
     image.save(buffer, format="PNG")
     return buffer.getvalue()
 
-def extract_text(img):
+def extract_text(image_bytes):
     url = "https://api.ocr.space/parse/image"
-    image_bytes = image_to_bytes(img)
 
     response = requests.post(
         url,

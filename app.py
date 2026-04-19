@@ -3,7 +3,7 @@ from PIL import Image
 from pdf2image import convert_from_bytes
 from parser import extract_invoice_data
 from ai_parser import extract_with_gpt
-from ocr_service import extract_text
+from ocr_service import extract_text, image_to_bytes
 #from ocr_local import extract_text
 
 
@@ -40,7 +40,8 @@ if uploaded_file is not None:
         for img in images:
             st.image(img, caption="Uploaded Invoice", use_container_width=True)
 
-            text = extract_text(img)
+            image_bytes = image_to_bytes(img)
+            text = extract_text(image_bytes)
             all_text += text + "\n"
     
     #data = extract_with_gpt(all_text)
