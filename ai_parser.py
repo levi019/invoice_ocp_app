@@ -16,7 +16,9 @@ Return ONLY JSON in this format:
   "date": "",
   "total": "",
   "currency": "",
-  "vendor": ""
+  "vendor": "",
+  "email": "",
+  "phone_number": ""
 }}
 
 If something is missing, return null.
