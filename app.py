@@ -3,7 +3,7 @@ from PIL import Image
 from pdf2image import convert_from_bytes
 from parser import extract_invoice_data
 from ai_parser import extract_with_gpt
-from ocr_service import extract_text, image_to_bytes
+from ocr_servicee import extract_text, image_to_bytes
 #from ocr_local import extract_text
 
 
