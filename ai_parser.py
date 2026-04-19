@@ -1,7 +1,8 @@
 from openai import OpenAI
+import streamlit
 import json
 
-client = OpenAI(api_key="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")
+client = OpenAI(api_key=streamlit.secrets["OPENAI_API_KEY"])
 
 def extract_with_gpt(text):
     prompt = f"""
@@ -38,3 +39,14 @@ Invoice text:
         return json.loads(result)
     except:
         return {"error": "Invalid JSON from GPT", "raw": result}
+    
+if __name__ == "__main__":
+    sample_text = """
+    Invoice No: INV-12345
+    Date: 2026-04-01
+    Vendor: ABC Company
+    Total: 150.00 USD
+    """
+
+    result = extract_with_gpt(sample_text)
+    print(result)

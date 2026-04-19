@@ -1,11 +1,18 @@
 import requests
+from io import BytesIO
 
-def extract_text(image_bytes):
+def image_to_bytes(image):
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    return buffer.getvalue()
+
+def extract_text(img):
     url = "https://api.ocr.space/parse/image"
+    image_bytes = image_to_bytes(img)
 
     response = requests.post(
         url,
-        files={"file": image_bytes},
+        files={"file": ("image.png", image_bytes)},
         data={
             "apikey": "K82235285288957",
             "language": "eng"
@@ -13,4 +20,14 @@ def extract_text(image_bytes):
     )
 
     result = response.json()
+
+    if result.get("IsErroredOnProcessing"):
+        return {"error": result.get("ErrorMessage")}
     return result["ParsedResults"][0]["ParsedText"]
+
+if __name__ == "__main__":
+    with open("keraksiz3.png", "rb") as f:
+        image_bytes = f.read()
+
+    text = extract_text(image_bytes)
+    print(text)
