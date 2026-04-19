@@ -5,7 +5,7 @@ import json
 client = OpenAI(api_key=streamlit.secrets["OPENAI_API_KEY"])
 
 def extract_with_gpt(text):
-    prompt = f"""
+    prompt0 = f"""
 You are an invoice data extractor.
 
 Extract structured data from this invoice text.
@@ -27,10 +27,45 @@ Invoice text:
 {text}
 """
 
+    prompt1 = f"""
+You are a strict invoice data extraction system.
+
+Your task is to extract ONLY explicitly stated information from the invoice text.
+
+Rules:
+- Do NOT guess or infer missing values
+- Do NOT fabricate data
+- If a field is not clearly present, return null
+- If NONE of the fields are found, return an empty JSON: {{}}
+- Return ONLY valid JSON (no explanation, no text)
+
+Extract the following fields:
+- invoice_no
+- date
+- total
+- currency
+- vendor
+- email
+- phone_number
+
+Output format:
+{{
+  "invoice_no": string or null,
+  "date": string or null,
+  "total": string or null,
+  "currency": string or null,
+  "vendor": string or null,
+  "email": string or null,
+  "phone_number": string or null
+}}
+
+Invoice text:
+{text}
+"""
     response = client.chat.completions.create(
         model="gpt-4o-mini",
         messages=[
-            {"role": "user", "content": prompt}
+            {"role": "user", "content": prompt1}
         ],
         temperature=0
     )
