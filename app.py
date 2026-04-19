@@ -45,15 +45,10 @@ if uploaded_file is not None:
             all_text += text + "\n"
     
     #data = extract_with_gpt(all_text)
-    aaa = ""
-    bbb = ""
     try:
         data = extract_with_gpt(all_text)
-        aaa = "With AI"
     except Exception as e:
         data = extract_invoice_data(all_text)
-        aaa = "With Parser"
-        bbb = str(e)
 
     # with st.spinner("Processing invoice..."):
     #     text = extract_text(image)
@@ -62,8 +57,7 @@ if uploaded_file is not None:
 
     #     data = extract_invoice_data(text)
 
-    st.subheader("📦 Structured Data" + aaa)
-    st.text(bbb)
+    st.subheader("📦 Structured Data")
     st.json(data)
 
 else:
